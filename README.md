@@ -2,6 +2,8 @@
 
 This neovim plugin allows you to cycle folds open or closed.
 
+[![asciicast](https://asciinema.org/a/476184.svg)](https://asciinema.org/a/476184)
+
 If you find any problems or have suggestions for improvements, do open an issue! :)
 
 This plugin is inspired by and borrows (heavily!) from [vim-fold-cycle](https://github.com/arecarn/vim-fold-cycle).
