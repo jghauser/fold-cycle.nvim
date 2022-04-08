@@ -17,10 +17,10 @@ M.setup = function(opts)
   if config['softwrap_movement_fix'] == true then
     M['softwrap_movement_fix'] = utils.softwrap_movement_fix
 
-    nvim_set_keymap('', 'j',
+    nvim_set_keymap('n', 'j',
       "<Cmd>lua require('fold-cycle').softwrap_movement_fix('j')<cr>",
       {silent = true, noremap = true})
-    nvim_set_keymap('', 'k',
+    nvim_set_keymap('n', 'k',
       "<Cmd>lua require('fold-cycle').softwrap_movement_fix('k')<cr>",
       {silent = true, noremap = true})
   end
