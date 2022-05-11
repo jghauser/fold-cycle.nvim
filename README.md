@@ -42,11 +42,11 @@ The setup function allows adjusting various settings. By default it sets the fol
 require('fold-cycle').setup({
   open_if_max_closed = true,    -- closing a fully closed fold will open it
   close_if_max_opened = true,   -- opening a fully open fold will close it
-  softwrap_movement_fix = true  -- makes movements j/k become gj/gk when softwrap is enabled and then
-                                -- fixes this annoying bug that is relevant for the plugin: 
-                                -- https://github.com/neovim/neovim/issues/15490
+  softwrap_movement_fix = false -- see below
 })
 ```
+
+The setting `softwrap_movement_fix` is set to `false` by default because it remaps `j`/`k`. However, I suggest setting it to `true`, because it remaps `j`/`k` to `gj`/`gk` when softwrap is enabled and then fixes [this annoying neovim bug](https://github.com/neovim/neovim/issues/15490). It should preserve all the normal functions of `j`/`k` when softwrap is disabled or when used with `v:count`.
 
 The plugin doesn't set any keymaps by default. I use the following:
 
