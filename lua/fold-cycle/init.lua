@@ -5,7 +5,7 @@
 local config = require("fold-cycle.config")
 local fold_cycle = require("fold-cycle.fold-cycle")
 local utils = require("fold-cycle.utils")
-local nvim_set_keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap
 
 local M = {}
 
@@ -17,12 +17,16 @@ M.setup = function(opts)
   if config['softwrap_movement_fix'] == true then
     M['softwrap_movement_fix'] = utils.softwrap_movement_fix
 
-    nvim_set_keymap('n', 'j',
-      "<Cmd>lua require('fold-cycle').softwrap_movement_fix('j')<cr>",
-      {silent = true, noremap = true})
-    nvim_set_keymap('n', 'k',
-      "<Cmd>lua require('fold-cycle').softwrap_movement_fix('k')<cr>",
-      {silent = true, noremap = true})
+    keymap.set('n', 'j',
+      function()
+        return vim.v.count == 0 and [[<cmd>lua require('fold-cycle').softwrap_movement_fix('j')<cr>]] or 'j'
+      end,
+      {silent = true, noremap = true, expr = true})
+    keymap.set('n', 'k',
+      function()
+        return vim.v.count == 0 and [[<cmd>lua require('fold-cycle').softwrap_movement_fix('k')<cr>]] or 'k'
+      end,
+      {silent = true, noremap = true, expr = true})
   end
 end
 
