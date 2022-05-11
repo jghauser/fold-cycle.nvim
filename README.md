@@ -51,7 +51,13 @@ The setting `softwrap_movement_fix` is set to `false` by default because it rema
 The plugin doesn't set any keymaps by default. I use the following:
 
 ```lua
-vim.nvim_set_keymap('n', '<tab>', [[<cmd>lua require('fold-cycle').open()<cr>]], {noremap = true, silent = true})
-vim.nvim_set_keymap('n', '<s-tab>', [[<cmd>lua require('fold-cycle').close()<cr>]], {noremap = true, silent = true})
-vim.nvim_set_keymap('n', 'zC', [[<cmd>lua require('fold-cycle').close_all()<cr>]], {noremap = false, silent = true})
+vim.keymap.set('n', '<tab>',
+  function() return require('fold-cycle').open() end,
+  {silent = true, desc = 'Fold-cycle: open folds'})
+vim.keymap.set('n', '<s-tab>',
+  function() return require('fold-cycle').close() end,
+  {silent = true, desc = 'Fold-cycle: close folds'})
+vim.keymap.set('n', 'zC',
+  function() return require('fold-cycle').close_all() end,
+  {remap = true, silent = true, desc = 'Fold-cycle: close all folds'})
 ```
