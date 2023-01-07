@@ -41,7 +41,7 @@ M.softwrap_movement_fix = function(movement)
 	else
 		cmd("normal! " .. movement)
 	end
-	cmd("redraw")
+	cmd("redraw") -- HACK: fixes disappearing statusline with cmdheight=0
 end
 
 return M
