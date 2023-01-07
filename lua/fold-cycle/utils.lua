@@ -41,6 +41,7 @@ M.softwrap_movement_fix = function(movement)
 	else
 		cmd("normal! " .. movement)
 	end
+	cmd("redraw")
 end
 
 return M
