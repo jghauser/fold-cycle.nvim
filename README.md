@@ -45,8 +45,7 @@ require('fold-cycle').setup({
   softwrap_movement_fix = false -- see below
 })
 ```
-
-The setting `softwrap_movement_fix` is set to `false` by default because it remaps `j`/`k`. However, I suggest setting it to `true`. When set to true, the plugin remaps `j`/`k` to `gj`/`gk` (when softwrap is enabled) allowing you to move up and down through softwrapped lines. Moreover -- and this is why this functionality is included with this plugin -- the setting fixes [this annoying neovim bug](https://github.com/neovim/neovim/issues/15490) that makes navigating folds more difficult. This setting should preserve all the normal operations of `j`/`k` when softwrap is disabled and when `j`/`k` is used with `v:count` (e.g. `5k` or `2j`).
+If you're on Neovim <0.9, I suggest setting `softwrap_movement_fix` to `true`. When set to true, the plugin remaps `j`/`k` to `gj`/`gk` (when softwrap is enabled) allowing you to move up and down through softwrapped lines. Moreover -- and this is why this functionality is included with this plugin -- the setting fixes [this annoying neovim bug](https://github.com/neovim/neovim/issues/15490) that makes navigating folds more difficult. This setting should preserve all the normal operations of `j`/`k` when softwrap is disabled and when `j`/`k` is used with `v:count` (e.g. `5k` or `2j`).
 
 The plugin doesn't set any keymaps by default. I use the following:
 
