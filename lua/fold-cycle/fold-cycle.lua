@@ -68,14 +68,11 @@ local function find_next_fold(line)
 
 	cmd(tostring(line))
 
-	local saved_t_vb = api.nvim_get_option("t_vb")
 	local saved_visualbell = api.nvim_get_option("visualbell")
 	api.nvim_set_option("visualbell", true)
-	api.nvim_set_option("t_vb", "")
 
 	cmd("normal! zj")
 
-	api.nvim_set_option("t_vb", saved_t_vb)
 	api.nvim_set_option("visualbell", saved_visualbell)
 
 	local next_fold_line = fn.line(".")
