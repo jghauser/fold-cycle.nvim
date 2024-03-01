@@ -6,6 +6,16 @@ local config = require("fold-cycle.config")
 local fn = vim.fn
 local cmd = vim.cmd
 local api = vim.api
+local ufo, isUfoAvailable = pcall(require, 'ufo')
+local open_all_folds_cmd
+local close_all_folds_cmd
+if isUfoAvailable then
+  open_all_folds_cmd = function() require('ufo').openAllFolds() end
+  close_all_folds_cmd = function() require('ufo').closeAllFolds() end
+else
+  open_all_folds_cmd = function() cmd("normal! zR") end
+  close_all_folds_cmd = function() cmd("normal! zM") end
+end
 
 -- holds parameters set by init()
 local init_cfg = {}
@@ -223,7 +233,7 @@ M.global_open = function()
   end
 
   if M.should_close_all_folds then
-    cmd("normal! zM")
+    close_all_folds_cmd()
     M.should_close_all_folds = false
   end
 end
@@ -260,8 +270,8 @@ M.global_close = function()
     M.should_open_all_folds = true
   end
   if M.should_open_all_folds then
+    open_all_folds_cmd()
     M.should_open_all_folds = false
-    cmd("normal! zR")
   end
 end
 
@@ -272,7 +282,7 @@ M.close_all = function()
   if init_success then
     close_all_folds_in_branch()
   else
-    cmd("normal! zM")
+    close_all_folds_cmd()
   end
 end
 
@@ -285,7 +295,7 @@ M.open_all = function()
   if init_success then
     open_branch()
   else
-    cmd("normal! zR")
+    open_all_folds_cmd()
   end
 end
 
