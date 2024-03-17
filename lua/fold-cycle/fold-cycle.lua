@@ -6,10 +6,10 @@ local config = require("fold-cycle.config")
 local fn = vim.fn
 local cmd = vim.cmd
 local api = vim.api
-local ufo, isUfoAvailable = pcall(require, 'ufo')
+local is_ufo_available, _ = pcall(require, 'ufo')
 local open_all_folds_cmd
 local close_all_folds_cmd
-if isUfoAvailable then
+if is_ufo_available then
   open_all_folds_cmd = function() require('ufo').openAllFolds() end
   close_all_folds_cmd = function() require('ufo').closeAllFolds() end
 else
