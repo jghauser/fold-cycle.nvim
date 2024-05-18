@@ -78,12 +78,23 @@ local function find_next_fold(line)
 
   cmd(tostring(line))
 
-  local saved_visualbell = api.nvim_get_option("visualbell")
-  api.nvim_set_option("visualbell", true)
+  local is_below_0_10 = not vim.fn.has('nvim-0.10')
+  local saved_visualbell
+  if is_below_0_10 then
+    saved_visualbell = api.nvim_get_option("visualbell")
+    api.nvim_set_option("visualbell", true)
+  else
+    saved_visualbell = api.nvim_get_option_value("visualbell", {})
+    api.nvim_set_option_value("visualbell", true, {})
+  end
 
   cmd("normal! zj")
 
-  api.nvim_set_option("visualbell", saved_visualbell)
+  if is_below_0_10 then
+    api.nvim_set_option("visualbell", saved_visualbell)
+  else
+    api.nvim_set_option_value("visualbell", saved_visualbell, {})
+  end
 
   local next_fold_line = fn.line(".")
 
