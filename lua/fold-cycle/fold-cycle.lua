@@ -207,13 +207,6 @@ end
 
 local M = {}
 
-if M.should_close_all_folds == nil then
-  M.should_close_all_folds = false
-end
-if M.should_open_all_folds == nil then
-  M.should_open_all_folds = false
-end
-
 -- global open folds
 M.global_open = function()
   local line = 1
@@ -239,13 +232,8 @@ M.global_open = function()
     end
   end
 
-  if not opened_any_fold then
-    M.should_close_all_folds = true
-  end
-
-  if M.should_close_all_folds then
+  if not opened_any_fold and config.close_if_max_opened then
     close_all_folds_cmd()
-    M.should_close_all_folds = false
   end
 end
 
@@ -277,12 +265,8 @@ M.global_close = function()
     end
   end
 
-  if not closed_any_fold then
-    M.should_open_all_folds = true
-  end
-  if M.should_open_all_folds then
+  if not closed_any_fold and config.open_if_max_closed then
     open_all_folds_cmd()
-    M.should_open_all_folds = false
   end
 end
 
