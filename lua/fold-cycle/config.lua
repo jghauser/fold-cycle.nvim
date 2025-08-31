@@ -6,7 +6,6 @@
 local default_config = {
   open_if_max_closed = true,
   close_if_max_opened = true,
-  softwrap_movement_fix = false,
 }
 
 local M = vim.deepcopy(default_config)
