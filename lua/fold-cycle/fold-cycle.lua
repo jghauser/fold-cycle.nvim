@@ -208,7 +208,7 @@ end
 local M = {}
 
 -- global open folds
-M.global_open = function()
+M.global_open = function(close_if_max_opened)
   local line = 1
   local last_line = vim.fn.line("$")
   local opened_any_fold = false
@@ -232,13 +232,17 @@ M.global_open = function()
     end
   end
 
-  if not opened_any_fold and config.close_if_max_opened then
+  if close_if_max_opened == nil then
+    close_if_max_opened = config.close_if_max_opened
+  end
+
+  if not opened_any_fold and close_if_max_opened then
     close_all_folds_cmd()
   end
 end
 
 -- global close folds
-M.global_close = function()
+M.global_close = function(open_if_max_closed)
   local last_line = vim.fn.line("$")
   local closed_any_fold = false
 
@@ -265,7 +269,11 @@ M.global_close = function()
     end
   end
 
-  if not closed_any_fold and config.open_if_max_closed then
+  if open_if_max_closed == nil then
+    open_if_max_closed = config.open_if_max_closed
+  end
+
+  if not closed_any_fold and open_if_max_closed then
     open_all_folds_cmd()
   end
 end
@@ -309,7 +317,11 @@ M.toggle_all = function()
 end
 
 -- open one level of folds in branch
-M.open = function()
+M.open = function(close_if_max_opened)
+  if close_if_max_opened == nil then
+    close_if_max_opened = config.close_if_max_opened
+  end
+
   -- if no fold at current_line, return
   local init_success = init()
 
@@ -318,7 +330,7 @@ M.open = function()
     if init_cfg.current_line_folded then
       cmd("foldopen")
       -- if branch is completely unfolded
-    elseif init_cfg.max_closed_fold_level == init_cfg.fold_level and config.close_if_max_opened then
+    elseif init_cfg.max_closed_fold_level == init_cfg.fold_level and close_if_max_opened then
       close_all_folds_in_branch()
       -- if current line is unfolded but branch can still be further unfolded
     else
@@ -332,18 +344,22 @@ M.open = function()
       end
     end
   else
-    M.global_open()
+    M.global_open(close_if_max_opened)
   end
 end
 
 -- close one level of folds in branch
-M.close = function()
+M.close = function(open_if_max_closed)
+  if open_if_max_closed == nil then
+    open_if_max_closed = config.open_if_max_closed
+  end
+
   -- if no fold at current_line, return
   local init_success = init()
 
   -- if current line is folded
   if init_success then
-    if init_cfg.current_line_folded and config.open_if_max_closed then
+    if init_cfg.current_line_folded and open_if_max_closed then
       open_branch()
       -- if there are no open folds in branch with a fold level different from current line
     elseif init_cfg.max_open_fold_level == init_cfg.fold_level then
@@ -352,7 +368,7 @@ M.close = function()
       close_branch(init_cfg.max_open_fold_level)
     end
   else
-    M.global_close()
+    M.global_close(open_if_max_closed)
   end
 end
 
